@@ -2,6 +2,7 @@
 
 import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drum_pad_admin/widgets/radioButtons.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -40,6 +41,8 @@ class _EditSongState extends State<EditSong> {
   String? newTrending, newGenre;
   double imageuploadProgress = 0, audioUploadProgress = 0;
   bool imageUploading = false, audioUploading = false;
+  List<String> trendOptions = ['None', 'Yes', 'No'],
+      genreOptions = ['None', 'Hip Hop', 'House', 'Rock', 'Trap'];
 
   void _pickAudio() async {
     setState(() {
@@ -518,115 +521,121 @@ class _EditSongState extends State<EditSong> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children: [
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 18),
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                border: Border.all(width: 1),
-                                borderRadius: BorderRadius.circular(5),
-                                color: const Color.fromARGB(255, 38, 37, 49),
-                              ),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              width: MediaQuery.of(context).size.width,
-                              child: Expanded(
-                                child: DropdownButton(
-                                  borderRadius: BorderRadius.circular(10),
-                                  value: newTrending,
-                                  dropdownColor: Colors.grey,
-                                  icon: const Icon(Icons.arrow_drop_down),
-                                  iconSize: 30,
-                                  isExpanded: true,
-                                  underline: const SizedBox(),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                  ),
-                                  hint: const Text(
-                                    'Trending or Not',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      newTrending = newValue!;
-                                    });
-                                  },
-                                  items: <String>[
-                                    'Yes',
-                                    'No',
-                                  ].map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 18),
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                border: Border.all(width: 1),
-                                borderRadius: BorderRadius.circular(5),
-                                color: const Color.fromARGB(255, 38, 37, 49),
-                              ),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              width: MediaQuery.of(context).size.width,
-                              child: Expanded(
-                                child: DropdownButton(
-                                  borderRadius: BorderRadius.circular(10),
-                                  value: newGenre,
-                                  dropdownColor: Colors.grey,
-                                  icon: const Icon(Icons.arrow_drop_down),
-                                  iconSize: 30,
-                                  isExpanded: true,
-                                  underline: const SizedBox(),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                  ),
-                                  hint: const Text(
-                                    'Select Genre',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      newGenre = newValue!;
-                                    });
-                                  },
-                                  items: <String>[
-                                    'Hip Hop',
-                                    'House',
-                                    'Rock',
-                                    'Trap',
-                                  ].map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      Flexible(child: RadioButtons(options: trendOptions)),
+                      Flexible(child: RadioButtons(options: genreOptions)),
+                    ],
                   ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(15),
+                  //   child: Row(
+                  //     children: [
+                  //       Flexible(
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.only(right: 18),
+                  //           child: Container(
+                  //             height: 50,
+                  //             decoration: BoxDecoration(
+                  //               border: Border.all(width: 1),
+                  //               borderRadius: BorderRadius.circular(5),
+                  //               color: const Color.fromARGB(255, 38, 37, 49),
+                  //             ),
+                  //             padding:
+                  //                 const EdgeInsets.symmetric(horizontal: 15),
+                  //             width: MediaQuery.of(context).size.width,
+                  //             child: Expanded(
+                  //               child: DropdownButton(
+                  //                 borderRadius: BorderRadius.circular(10),
+                  //                 value: newTrending,
+                  //                 dropdownColor: Colors.grey,
+                  //                 icon: const Icon(Icons.arrow_drop_down),
+                  //                 iconSize: 30,
+                  //                 isExpanded: true,
+                  //                 underline: const SizedBox(),
+                  //                 style: const TextStyle(
+                  //                   color: Colors.white,
+                  //                   fontSize: 16,
+                  //                 ),
+                  //                 hint: const Text(
+                  //                   'Trending or Not',
+                  //                   style: TextStyle(color: Colors.white),
+                  //                 ),
+                  //                 onChanged: (String? newValue) {
+                  //                   setState(() {
+                  //                     newTrending = newValue!;
+                  //                   });
+                  //                 },
+                  //                 items: <String>[
+                  //                   'Yes',
+                  //                   'No',
+                  //                 ].map<DropdownMenuItem<String>>(
+                  //                     (String value) {
+                  //                   return DropdownMenuItem<String>(
+                  //                     value: value,
+                  //                     child: Text(value),
+                  //                   );
+                  //                 }).toList(),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       Flexible(
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.only(left: 18),
+                  //           child: Container(
+                  //             height: 50,
+                  //             decoration: BoxDecoration(
+                  //               border: Border.all(width: 1),
+                  //               borderRadius: BorderRadius.circular(5),
+                  //               color: const Color.fromARGB(255, 38, 37, 49),
+                  //             ),
+                  //             padding:
+                  //                 const EdgeInsets.symmetric(horizontal: 15),
+                  //             width: MediaQuery.of(context).size.width,
+                  //             child: Expanded(
+                  //               child: DropdownButton(
+                  //                 borderRadius: BorderRadius.circular(10),
+                  //                 value: newGenre,
+                  //                 dropdownColor: Colors.grey,
+                  //                 icon: const Icon(Icons.arrow_drop_down),
+                  //                 iconSize: 30,
+                  //                 isExpanded: true,
+                  //                 underline: const SizedBox(),
+                  //                 style: const TextStyle(
+                  //                   color: Colors.white,
+                  //                   fontSize: 16,
+                  //                 ),
+                  //                 hint: const Text(
+                  //                   'Select Genre',
+                  //                   style: TextStyle(color: Colors.white),
+                  //                 ),
+                  //                 onChanged: (String? newValue) {
+                  //                   setState(() {
+                  //                     newGenre = newValue!;
+                  //                   });
+                  //                 },
+                  //                 items: <String>[
+                  // 'Hip Hop',
+                  // 'House',
+                  // 'Rock',
+                  // 'Trap',
+                  //                 ].map<DropdownMenuItem<String>>(
+                  //                     (String value) {
+                  //                   return DropdownMenuItem<String>(
+                  //                     value: value,
+                  //                     child: Text(value),
+                  //                   );
+                  //                 }).toList(),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.all(15),
                     child: Row(
