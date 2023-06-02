@@ -39,8 +39,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.cyan,
       ),
-      // home: const LoginPage(),
-      home: const MyHomePage(title: 'DRUM PAD ADMIN'),
+      home: const LoginPage(),
+      // home: const MyHomePage(title: 'DRUM PAD ADMIN'),
       // home: const UploadImage(),
       // home: const AllSongsPage(user: 'vikram'),
       // home: const MembershipPage(),
