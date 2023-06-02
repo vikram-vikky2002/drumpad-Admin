@@ -509,7 +509,7 @@ class _EditSongState extends State<EditSong> {
                                 fit: BoxFit.fill,
                               ),
                             ),
-                            if (widget.premium != 'No')
+                            if (widget.premium)
                               const Text(
                                 'Premium',
                                 style: TextStyle(

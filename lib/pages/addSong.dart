@@ -51,8 +51,7 @@ class _AddSongState extends State<AddSong> {
         _songSubTitleController.text != '' &&
         newGenre != 0 &&
         newTrending != 0 &&
-        imgUrl != null &&
-        songUrl != null) {
+        imgUrl != null) {
       return true;
     } else {
       return false;
