@@ -2,7 +2,6 @@
 
 import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:drum_pad_admin/widgets/radioButtons.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,6 +18,7 @@ class EditSong extends StatefulWidget {
     required this.genre,
     required this.songUrl,
     required this.user,
+    required this.premium,
   });
 
   final String Title;
@@ -29,6 +29,7 @@ class EditSong extends StatefulWidget {
   final String genre;
   String songUrl;
   final String user;
+  final bool premium;
 
   @override
   State<EditSong> createState() => _EditSongState();
@@ -38,7 +39,7 @@ class _EditSongState extends State<EditSong> {
   late final TextEditingController _songTitleController,
       _songSubTitleController;
   var NewImageUrl = null, NewSongUrl = null;
-  String? newTrending, newGenre;
+  int newTrending = 0, newGenre = 0, newPremium = 0;
   double imageuploadProgress = 0, audioUploadProgress = 0;
   bool imageUploading = false, audioUploading = false;
   List<String> trendOptions = ['None', 'Yes', 'No'],
@@ -262,9 +263,10 @@ class _EditSongState extends State<EditSong> {
         },
       );
     }
-    if (newGenre != null) {
+    if (newGenre != 0) {
+      print('Genre Updated........ $newGenre');
       FirebaseFirestore.instance.collection('DemoSongs').doc(widget.id).update({
-        'genre': newGenre,
+        'genre': genreOptions[newGenre],
         'lastEditedBy': widget.user,
       }).then((value) {
         SnackBar snackBar = SnackBar(
@@ -292,9 +294,41 @@ class _EditSongState extends State<EditSong> {
         },
       );
     }
-    if (newTrending != null) {
+    if (newTrending != 0) {
+      print('Trending Updated........ $newTrending');
       FirebaseFirestore.instance.collection('DemoSongs').doc(widget.id).update({
-        'trending': newTrending,
+        'trending': trendOptions[newTrending],
+        'lastEditedBy': widget.user,
+      }).then((value) {
+        SnackBar snackBar = SnackBar(
+          content: Text(
+            'song Updated : ${widget.id}',
+            style: const TextStyle(
+              fontSize: 20,
+            ),
+          ),
+          backgroundColor: const Color.fromARGB(255, 32, 212, 38),
+          duration: const Duration(seconds: 2),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }).catchError(
+        (error) {
+          SnackBar snackBar = SnackBar(
+            content: Text(
+              'Error : $error',
+              style: const TextStyle(fontSize: 20, color: Colors.white),
+            ),
+            backgroundColor: const Color.fromARGB(255, 173, 5, 5),
+            duration: const Duration(seconds: 2),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        },
+      );
+    }
+    if (newPremium != 0) {
+      print('Premium Updated........ $newPremium');
+      FirebaseFirestore.instance.collection('DemoSongs').doc(widget.id).update({
+        'premium': trendOptions[newPremium] == 'Yes' ? true : false,
         'lastEditedBy': widget.user,
       }).then((value) {
         SnackBar snackBar = SnackBar(
@@ -462,6 +496,38 @@ class _EditSongState extends State<EditSong> {
                           ],
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: Image(
+                                image: AssetImage('Assets/Premium.jpg'),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            if (widget.premium != 'No')
+                              const Text(
+                                'Premium',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              )
+                            else
+                              const Text(
+                                'Not Premium',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -523,111 +589,238 @@ class _EditSongState extends State<EditSong> {
                   ),
                   Row(
                     children: [
-                      Flexible(child: RadioButtons(options: trendOptions)),
-                      Flexible(child: RadioButtons(options: genreOptions)),
+                      Flexible(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 10),
+                                  child: Text(
+                                    'Trending : ',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            for (int i = 1; i < trendOptions.length; i++)
+                              RadioListTile(
+                                value: i,
+                                groupValue: newTrending,
+                                onChanged: (value) {
+                                  setState(() {
+                                    newTrending = value!;
+                                  });
+                                },
+                                title: Text(
+                                  trendOptions[i],
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            Row(
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 10),
+                                  child: Text(
+                                    'Premium : ',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            for (int i = 1; i < trendOptions.length; i++)
+                              RadioListTile(
+                                value: i,
+                                groupValue: newPremium,
+                                onChanged: (value) {
+                                  setState(() {
+                                    newPremium = value!;
+                                  });
+                                },
+                                title: Text(
+                                  trendOptions[i],
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                      Flexible(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 10),
+                                  child: Text(
+                                    'Genre : ',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            for (int i = 1; i < genreOptions.length; i++)
+                              RadioListTile(
+                                value: i,
+                                groupValue: newGenre,
+                                onChanged: (value) {
+                                  setState(() {
+                                    newGenre = value!;
+                                  });
+                                },
+                                title: Text(
+                                  genreOptions[i],
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 18),
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 1),
-                              borderRadius: BorderRadius.circular(5),
-                              color: const Color.fromARGB(255, 38, 37, 49),
-                            ),
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            width: MediaQuery.of(context).size.width,
-                            child: Expanded(
-                              child: DropdownButton(
-                                borderRadius: BorderRadius.circular(10),
-                                value: newTrending,
-                                dropdownColor: Colors.grey,
-                                icon: const Icon(Icons.arrow_drop_down),
-                                iconSize: 30,
-                                isExpanded: true,
-                                underline: const SizedBox(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                                hint: const Text(
-                                  'Trending or Not',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    newTrending = newValue!;
-                                  });
-                                },
-                                items: <String>[
-                                  'Yes',
-                                  'No',
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18),
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 1),
-                              borderRadius: BorderRadius.circular(5),
-                              color: const Color.fromARGB(255, 38, 37, 49),
-                            ),
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            width: MediaQuery.of(context).size.width,
-                            child: Expanded(
-                              child: DropdownButton(
-                                borderRadius: BorderRadius.circular(10),
-                                value: newGenre,
-                                dropdownColor: Colors.grey,
-                                icon: const Icon(Icons.arrow_drop_down),
-                                iconSize: 30,
-                                isExpanded: true,
-                                underline: const SizedBox(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                                hint: const Text(
-                                  'Select Genre',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    newGenre = newValue!;
-                                  });
-                                },
-                                items: <String>[
-                                  'Hip Hop',
-                                  'House',
-                                  'Rock',
-                                  'Trap',
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Flexible(
+                  //       child: RadioButtons(
+                  //         options: trendOptions,
+                  //         selection: newTrending,
+                  //       ),
+                  //     ),
+                  //     Flexible(
+                  //       child: RadioButtons(
+                  //         options: genreOptions,
+                  //         selection: newGenre,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(15),
+                  //   child: Row(
+                  //     children: [
+                  //       Flexible(
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.only(right: 18),
+                  //           child: Container(
+                  //             height: 50,
+                  //             decoration: BoxDecoration(
+                  //               border: Border.all(width: 1),
+                  //               borderRadius: BorderRadius.circular(5),
+                  //               color: const Color.fromARGB(255, 38, 37, 49),
+                  //             ),
+                  //             padding:
+                  //                 const EdgeInsets.symmetric(horizontal: 15),
+                  //             width: MediaQuery.of(context).size.width,
+                  //             child: Expanded(
+                  //               child: DropdownButton(
+                  //                 borderRadius: BorderRadius.circular(10),
+                  //                 value: newTrending,
+                  //                 dropdownColor: Colors.grey,
+                  //                 icon: const Icon(Icons.arrow_drop_down),
+                  //                 iconSize: 30,
+                  //                 isExpanded: true,
+                  //                 underline: const SizedBox(),
+                  //                 style: const TextStyle(
+                  //                   color: Colors.white,
+                  //                   fontSize: 16,
+                  //                 ),
+                  //                 hint: const Text(
+                  //                   'Trending or Not',
+                  //                   style: TextStyle(color: Colors.white),
+                  //                 ),
+                  //                 onChanged: (String? newValue) {
+                  //                   setState(() {
+                  //                     newTrending = newValue!;
+                  //                   });
+                  //                 },
+                  //                 items: <String>[
+                  //                   'Yes',
+                  //                   'No',
+                  //                 ].map<DropdownMenuItem<String>>(
+                  //                     (String value) {
+                  //                   return DropdownMenuItem<String>(
+                  //                     value: value,
+                  //                     child: Text(value),
+                  //                   );
+                  //                 }).toList(),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       Flexible(
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.only(left: 18),
+                  //           child: Container(
+                  //             height: 50,
+                  //             decoration: BoxDecoration(
+                  //               border: Border.all(width: 1),
+                  //               borderRadius: BorderRadius.circular(5),
+                  //               color: const Color.fromARGB(255, 38, 37, 49),
+                  //             ),
+                  //             padding:
+                  //                 const EdgeInsets.symmetric(horizontal: 15),
+                  //             width: MediaQuery.of(context).size.width,
+                  //             child: Expanded(
+                  //               child: DropdownButton(
+                  //                 borderRadius: BorderRadius.circular(10),
+                  //                 value: newGenre,
+                  //                 dropdownColor: Colors.grey,
+                  //                 icon: const Icon(Icons.arrow_drop_down),
+                  //                 iconSize: 30,
+                  //                 isExpanded: true,
+                  //                 underline: const SizedBox(),
+                  //                 style: const TextStyle(
+                  //                   color: Colors.white,
+                  //                   fontSize: 16,
+                  //                 ),
+                  //                 hint: const Text(
+                  //                   'Select Genre',
+                  //                   style: TextStyle(color: Colors.white),
+                  //                 ),
+                  //                 onChanged: (String? newValue) {
+                  //                   setState(() {
+                  //                     newGenre = newValue!;
+                  //                   });
+                  //                 },
+                  //                 items: <String>[
+                  // 'Hip Hop',
+                  // 'House',
+                  // 'Rock',
+                  // 'Trap',
+                  //                 ].map<DropdownMenuItem<String>>(
+                  //                     (String value) {
+                  //                   return DropdownMenuItem<String>(
+                  //                     value: value,
+                  //                     child: Text(value),
+                  //                   );
+                  //                 }).toList(),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.all(15),
                     child: Row(

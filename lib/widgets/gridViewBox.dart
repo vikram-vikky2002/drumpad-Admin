@@ -16,6 +16,7 @@ class GridViewBox extends StatefulWidget {
     required this.genre,
     required this.songurl,
     required this.user,
+    required this.premium,
   });
 
   final String id;
@@ -26,6 +27,7 @@ class GridViewBox extends StatefulWidget {
   final String trending;
   final String genre;
   final String user;
+  final bool premium;
 
   @override
   State<GridViewBox> createState() => _GridViewBoxState();
@@ -75,6 +77,7 @@ class _GridViewBoxState extends State<GridViewBox> {
           trending: widget.trending,
           genre: widget.genre,
           user: widget.user,
+          premium: widget.premium,
         ),
       ),
     );

@@ -79,6 +79,7 @@ class _GridDisplayState extends State<GridDisplay> {
                         trending: filteredSongs![index]['trending'],
                         genre: filteredSongs![index]['genre'],
                         user: widget.user,
+                        premium: filteredSongs![index]['premium'],
                       );
                     },
                   );
