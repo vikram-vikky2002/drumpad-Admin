@@ -59,108 +59,93 @@ class _AllSongsPageState extends State<AllSongsPage> {
               child: filter
                   ? Padding(
                       padding: const EdgeInsets.all(15),
-                      child: Row(
+                      child: Flex(
+                        direction: Axis.horizontal,
                         children: [
-                          Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 18),
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  border: Border.all(width: 1),
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: const Color.fromARGB(255, 38, 37, 49),
+                          Expanded(
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1),
+                                borderRadius: BorderRadius.circular(5),
+                                color: const Color.fromARGB(255, 38, 37, 49),
+                              ),
+                              child: DropdownButton(
+                                borderRadius: BorderRadius.circular(10),
+                                value: ftrending,
+                                dropdownColor: Colors.grey,
+                                icon: const Icon(Icons.arrow_drop_down),
+                                iconSize: 30,
+                                isExpanded: true,
+                                underline: const SizedBox(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
                                 ),
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                width: MediaQuery.of(context).size.width,
-                                child: Expanded(
-                                  child: DropdownButton(
-                                    borderRadius: BorderRadius.circular(10),
-                                    value: ftrending,
-                                    dropdownColor: Colors.grey,
-                                    icon: const Icon(Icons.arrow_drop_down),
-                                    iconSize: 30,
-                                    isExpanded: true,
-                                    underline: const SizedBox(),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
-                                    hint: const Text(
-                                      'Trending or Not',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        ftrending = newValue!;
-                                      });
-                                    },
-                                    items: <String>[
-                                      'Yes',
-                                      'No',
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                  ),
+                                hint: const Text(
+                                  'Trending or Not',
+                                  style: TextStyle(color: Colors.white),
                                 ),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    ftrending = newValue!;
+                                  });
+                                },
+                                items: <String>[
+                                  'Yes',
+                                  'No',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
                               ),
                             ),
                           ),
-                          Flexible(
-                            child: Padding(
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: Container(
                               padding:
-                                  const EdgeInsets.only(left: 18, right: 18),
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  border: Border.all(width: 1),
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: const Color.fromARGB(255, 38, 37, 49),
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1),
+                                borderRadius: BorderRadius.circular(5),
+                                color: const Color.fromARGB(255, 38, 37, 49),
+                              ),
+                              child: DropdownButton(
+                                borderRadius: BorderRadius.circular(10),
+                                value: fgenre,
+                                dropdownColor: Colors.grey,
+                                icon: const Icon(Icons.arrow_drop_down),
+                                iconSize: 30,
+                                isExpanded: true,
+                                underline: const SizedBox(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
                                 ),
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                width: MediaQuery.of(context).size.width,
-                                child: Expanded(
-                                  child: DropdownButton(
-                                    borderRadius: BorderRadius.circular(10),
-                                    value: fgenre,
-                                    dropdownColor: Colors.grey,
-                                    icon: const Icon(Icons.arrow_drop_down),
-                                    iconSize: 30,
-                                    isExpanded: true,
-                                    underline: const SizedBox(),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
-                                    hint: const Text(
-                                      'Select Genre',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        fgenre = newValue!;
-                                      });
-                                    },
-                                    items: <String>[
-                                      'Hip Hop',
-                                      'House',
-                                      'Rock',
-                                      'Trap',
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                  ),
+                                hint: const Text(
+                                  'Select Genre',
+                                  style: TextStyle(color: Colors.white),
                                 ),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    fgenre = newValue!;
+                                  });
+                                },
+                                items: <String>[
+                                  'Hip Hop',
+                                  'House',
+                                  'Rock',
+                                  'Trap',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
                               ),
                             ),
                           ),
