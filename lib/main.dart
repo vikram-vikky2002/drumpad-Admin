@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
       // home: const LoginPage(),
       // home: const MyHomePage(title: 'DRUM PAD ADMIN'),
       // home: const UploadImage(),
-      home: const AllSongsPage(user: 'null'),
+      // home: const AllSongsPage(user: 'null'),
       // home: const MembershipPage(),
     );
   }
