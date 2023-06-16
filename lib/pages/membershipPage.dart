@@ -27,7 +27,7 @@ class _MembershipPageState extends State<MembershipPage> {
   void goldUpdate() {
     try {
       FirebaseFirestore.instance.collection('membership').doc('Gold').update({
-        'amount': _goldPriceController.text,
+        'amount': double.parse(_goldPriceController.text),
         'updatedOn': DateTime.now().toString(),
       });
       Fluttertoast.showToast(
@@ -59,7 +59,7 @@ class _MembershipPageState extends State<MembershipPage> {
           .collection('membership')
           .doc('Diamond')
           .update({
-        'amount': _diamondPriceController.text,
+        'amount': double.parse(_diamondPriceController.text),
         'updatedOn': DateTime.now().toString(),
       });
       Fluttertoast.showToast(
@@ -91,7 +91,7 @@ class _MembershipPageState extends State<MembershipPage> {
           .collection('membership')
           .doc('Platinum')
           .update({
-        'amount': _platinumPriceController.text,
+        'amount': double.parse(_platinumPriceController.text),
         'updatedOn': DateTime.now().toString(),
       });
       Fluttertoast.showToast(
