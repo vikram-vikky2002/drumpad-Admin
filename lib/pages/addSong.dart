@@ -71,7 +71,7 @@ class _AddSongState extends State<AddSong> {
       reader.readAsDataUrl(file);
       reader.onLoadEnd.listen(
         (event) async {
-          var ref = fs.ref().child('DemoSong/$docID');
+          var ref = fs.ref().child('Songs/$docID');
           var uploadTask = ref.putBlob(file);
           uploadTask.snapshotEvents.listen(
             (TaskSnapshot snapshot) {
@@ -116,7 +116,7 @@ class _AddSongState extends State<AddSong> {
         reader.readAsDataUrl(file);
         reader.onLoadEnd.listen(
           (event) async {
-            var ref = fs.ref().child('DemoImages/$docID');
+            var ref = fs.ref().child('Images/$docID');
             var uploadTask = ref.putBlob(file);
             uploadTask.snapshotEvents.listen(
               (TaskSnapshot snapshot) {
@@ -162,8 +162,7 @@ class _AddSongState extends State<AddSong> {
       };
 
       try {
-        final collectionRef =
-            FirebaseFirestore.instance.collection('DemoSongs');
+        final collectionRef = FirebaseFirestore.instance.collection('Songs');
         await collectionRef.doc(docID).set(songData);
         Fluttertoast.showToast(
           msg: 'Song Added Successfully',
@@ -175,6 +174,7 @@ class _AddSongState extends State<AddSong> {
           fontSize: 16.0,
         );
         _clearForm();
+        // Navigator.pop(context);
       } catch (e) {
         Fluttertoast.showToast(
           msg: 'Error uploading Song Data to Firestore: $e',
@@ -207,6 +207,7 @@ class _AddSongState extends State<AddSong> {
       newGenre = 0;
       newTrending = 0;
       premium = 0;
+      docID = DateTime.now().toString();
     });
   }
 
@@ -295,8 +296,8 @@ class _AddSongState extends State<AddSong> {
                   Flexible(
                     child: Column(
                       children: [
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 24, vertical: 10),
@@ -326,8 +327,8 @@ class _AddSongState extends State<AddSong> {
                               ),
                             ),
                           ),
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 24, vertical: 10),
@@ -363,8 +364,8 @@ class _AddSongState extends State<AddSong> {
                   Flexible(
                     child: Column(
                       children: [
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 24, vertical: 10),

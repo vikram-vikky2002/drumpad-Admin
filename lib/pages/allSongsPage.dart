@@ -219,8 +219,8 @@ class _AllSongsPageState extends State<AllSongsPage> {
                       filter = !filter;
                     });
                   },
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Icon(
                         Icons.filter_alt_sharp,
                         size: 27,

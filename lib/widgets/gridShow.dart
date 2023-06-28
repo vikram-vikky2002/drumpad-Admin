@@ -50,7 +50,7 @@ class _GridDisplayState extends State<GridDisplay> {
 
     return Flexible(
       child: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('DemoSongs').snapshots(),
+        stream: FirebaseFirestore.instance.collection('Songs').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('Error in receiving Data : ${snapshot.error}');

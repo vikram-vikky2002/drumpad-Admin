@@ -35,13 +35,10 @@ class GridViewBox extends StatefulWidget {
 
 class _GridViewBoxState extends State<GridViewBox> {
   delete() {
-    FirebaseFirestore.instance
-        .collection('DemoSongs')
-        .doc(widget.id)
-        .delete()
-        .then((doc) {
-      FirebaseStorage.instance.ref().child('DemoImages/${widget.id}').delete();
-      FirebaseStorage.instance.ref().child('DemoSongs/${widget.id}').delete();
+    FirebaseFirestore.instance.collection('Songs').doc(widget.id).delete().then(
+        (doc) {
+      FirebaseStorage.instance.ref().child('Images/${widget.id}').delete();
+      FirebaseStorage.instance.ref().child('Songs/${widget.id}').delete();
       Fluttertoast.showToast(
         msg: 'Song Deleted : ${widget.title}, ${widget.id}',
         toastLength: Toast.LENGTH_SHORT,
@@ -119,8 +116,10 @@ class _GridViewBoxState extends State<GridViewBox> {
                     padding: const EdgeInsets.all(3),
                     child: Text(
                       widget.title,
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,
+                        fontWeight: FontWeight.w600,
                         fontSize: 20,
                       ),
                     ),
@@ -131,7 +130,8 @@ class _GridViewBoxState extends State<GridViewBox> {
                       widget.subtitle,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 17,
                       ),
                     ),
                   ),

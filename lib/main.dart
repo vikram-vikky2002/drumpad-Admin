@@ -1,11 +1,6 @@
-import 'package:drum_pad_admin/pages/addSong.dart';
-import 'package:drum_pad_admin/pages/allSongsPage.dart';
 import 'package:drum_pad_admin/pages/loginScreen.dart';
-import 'package:drum_pad_admin/pages/membershipPage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'pages/homePage.dart';
-import 'pages/newSampleUpload.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
