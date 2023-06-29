@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drum_pad_admin/widgets/gridViewBox.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,7 @@ class GridDisplay extends StatefulWidget {
 class _GridDisplayState extends State<GridDisplay> {
   @override
   Widget build(BuildContext context) {
-    int songsCount, filteredSongsCount = 0;
+    int filteredSongsCount = 0;
     List? songs, filteredSongs;
 
     void _filter() {
@@ -60,7 +62,7 @@ class _GridDisplayState extends State<GridDisplay> {
             } else if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasData) {
                 songs = filteredSongs = snapshot.data!.docs;
-                songsCount = filteredSongsCount = songs!.length;
+                filteredSongsCount = songs!.length;
                 _filter();
                 if (filteredSongsCount > 0) {
                   return GridView.builder(

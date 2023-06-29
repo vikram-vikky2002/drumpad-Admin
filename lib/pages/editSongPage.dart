@@ -505,7 +505,7 @@ class _EditSongState extends State<EditSong> {
                               height: 40,
                               width: 40,
                               child: Image(
-                                image: AssetImage('Assets/Premium.jpg'),
+                                image: AssetImage('Assets/Premium.png'),
                                 fit: BoxFit.fill,
                               ),
                             ),

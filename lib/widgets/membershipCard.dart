@@ -47,7 +47,7 @@ class MembershipCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$ $price',
+                '₹ ${price.toString()}',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20,

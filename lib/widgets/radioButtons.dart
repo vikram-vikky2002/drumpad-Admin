@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class RadioButtons extends StatefulWidget {
@@ -17,7 +19,7 @@ class RadioButtons extends StatefulWidget {
 class _RadioButtonsState extends State<RadioButtons> {
   @override
   Widget build(BuildContext context) {
-    int _selection = 2;
+    // int _selection = 2;
 
     void radioChange(value) {
       setState(() {

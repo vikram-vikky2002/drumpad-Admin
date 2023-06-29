@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drum_pad_admin/widgets/membershipCard.dart';
-import 'package:drum_pad_admin/widgets/priceEdit.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -179,7 +177,7 @@ class _MembershipPageState extends State<MembershipPage> {
                       return MembershipCard(
                         title: "GOLD",
                         image: 'Assets/goldPlan.png',
-                        price: gold['amount'],
+                        price: gold['amount'].toString(),
                         color: const Color.fromARGB(255, 255, 243, 139),
                       );
                     } else {
@@ -205,7 +203,7 @@ class _MembershipPageState extends State<MembershipPage> {
                       return MembershipCard(
                         title: "DIAMOND",
                         image: 'Assets/diamondPlan.png',
-                        price: diamond['amount'],
+                        price: diamond['amount'].toString(),
                         color: const Color.fromARGB(255, 173, 245, 255),
                       );
                     } else {
@@ -231,7 +229,7 @@ class _MembershipPageState extends State<MembershipPage> {
                       return MembershipCard(
                         title: "PLATINUM",
                         image: 'Assets/platinumPlan.png',
-                        price: platinum['amount'],
+                        price: platinum['amount'].toString(),
                         color: const Color.fromARGB(255, 210, 210, 210),
                       );
                     } else {
